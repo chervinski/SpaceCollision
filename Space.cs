@@ -53,7 +53,7 @@ namespace SpaceCollision
 				foreach (SpaceObject i in objects)
 					i.GravityMove(objects, dt);
 
-				if ((collided = Collided()) != null)
+				if ((collided = Collided(objects)) != null)
 					return passed_time;
 
 				/*****ORBIT DETECTION PART*****/
@@ -110,12 +110,12 @@ namespace SpaceCollision
 		}
 		/// <summary>Finds the collided objects in the current state.</summary>
 		/// <returns>array[pairs][2] of their identifiers (unlikely to be more than 1 pair).</returns>
-		private int[][] Collided()
+		private static int[][] Collided(SpaceObject[] objects)
 		{
 			List<int[]> collided = new List<int[]>();
-			for (int i = 0; i < Objects.Count - 1; i++)
-				for (int j = i + 1; j < Objects.Count; j++)
-					if (Objects[i].Position.DistanceTo(Objects[j].Position) <= Objects[i].Radius + Objects[j].Radius)
+			for (int i = 0; i < objects.Length - 1; i++)
+				for (int j = i + 1; j < objects.Length; j++)
+					if (objects[i].Position.DistanceTo(objects[j].Position) <= objects[i].Radius + objects[j].Radius)
 						collided.Add(new int[] { i, j });
 			return collided.Count > 0 ? collided.ToArray() : null;
 		}
