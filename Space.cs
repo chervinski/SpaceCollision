@@ -152,8 +152,8 @@ namespace SpaceCollision
 				if (cur_dist + precision >= collision_dist && // they ~touched with their surfaces
 					cur_dist - precision <= collision_dist &&
 					(a.Position.DistanceTo(a_move) < a.Position.DistanceTo(b_move) || // and it's not the opposite side
-					b.Radius + precision >= 0 && // but if radius ~= 0, then ok
-					b.Radius - precision <= 0))
+					(a.Radius + precision >= 0 && a.Radius - precision <= 0 && // but if their radiuses ~= 0, then ok
+					b.Radius + precision >= 0 && b.Radius - precision <= 0)))
 					return time;
 
 				if (last_dist == (last_dist = left.DistanceTo(right)))
